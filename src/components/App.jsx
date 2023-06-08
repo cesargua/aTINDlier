@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react'
 // import viteLogo from '/vite.svg'
 // import '../css/App.css'
 import Product_Card from './Product_Card.jsx'
-import Accept from './Accept.jsx'
-import Reject from './Reject.jsx'
+
 import {Grid} from '@mui/material'
 import Budget from './Budget.jsx'
 import Navbar from './Navbar.jsx'
@@ -18,10 +17,9 @@ import '../index.css'
 function App() {
   // const [ , ] = useState()
 
-  const [product, setProduct] = useState([])
+  const [products, setProducts] = useState([])
   const [budget, setBudget] = useState(20000);
-  const [clicked, setClicked] = useState(true);
-  const [swiped, setSwiped] = useState(true);
+  
 
   //call api here
   const budgetChange= (change) =>{
@@ -34,40 +32,40 @@ function App() {
             .then(res=>res.json())
             .then(json=>{
               console.log(json)
-              setProduct(json)
+              setProducts(json)
             }).catch((err)=>{
               console.error(err)
             });
   }
 
-  // const GETAllProducts = () =>{
-  //   fetch(`https://fakestoreapi.com/products/`)
-  //           .then(res=>res.json())
-  //           .then(json=>{
-  //             console.log(json)
-  //             setProduct(json)
-  //           }).catch((err)=>{
-  //             console.error(err)
-  //           });
+  const GETAllProducts = () =>{
+    fetch(`https://fakestoreapi.com/products/`)
+            .then(res=>res.json())
+            .then(json=>{
+              console.log(json)
+              setProducts(json)
+            }).catch((err)=>{
+              console.error(err)
+            });
     
-  // }
+  }
 
 
 
-  useEffect(()=>{
-    GETProduct(Math.floor(Math.random() * 10));
-  },[]);
-  useEffect(()=>{
-    GETProduct(Math.floor(Math.random() * 10));
-  },[clicked]);
-  useEffect(()=>{
-    console.log('here!')
-    GETProduct(Math.floor(Math.random() * 10));
-  },[swiped]);
+  // useEffect(()=>{
+  //   GETProduct(Math.floor(Math.random() * 10));
+  // },[]);
+  // useEffect(()=>{
+  //   GETProduct(Math.floor(Math.random() * 10));
+  // },[clicked]);
+  // useEffect(()=>{
+  //   console.log('here!')
+  //   GETProduct(Math.floor(Math.random() * 10));
+  // },[swiped]);
 
-  //  useEffect(()=>{
-  //   GETAllProducts();
-  //  },[]);
+   useEffect(()=>{
+    GETAllProducts();
+   },[]);
 
 
   
@@ -91,17 +89,11 @@ function App() {
           justifyContent="center"
           sx={{ minHeight: '120vh' }}
         >
-          <Grid item xs={0}>
-            <Reject clicked={clicked} setClicked={setClicked} />
-          </Grid>
-          <Grid item xs={0}>
+         
+         
             {/* {products ? products.map(product=><Product_Card products={products} product={product} budget={budget} budgetChange={budgetChange} swiped={swiped} setSwiped={setSwiped}/> ): null } */}
-            {product? <Product_Card product={product} budget={budget} budgetChange={budgetChange} swiped={swiped} setSwiped={setSwiped}/>: null}
+            {products? <Product_Card products={products} budget={budget} budgetChange={budgetChange}/>: null}
           </Grid>
-          <Grid item xs={0}>
-            <Accept budget={budget} budgetChange={budgetChange} price={product.price} clicked={clicked} setClicked={setClicked}/>
-          </Grid>
-        </Grid>
       </div>
   )
 

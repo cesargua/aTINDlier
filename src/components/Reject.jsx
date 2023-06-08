@@ -11,13 +11,13 @@ function Reject({clicked, setClicked}){
         width: "100px"
     }
 
-     const clickHandler= () =>{
-        setClicked(!clicked)
-    }
+    //  const clickHandler= () =>{
+    //     setClicked(!clicked)
+    // }
     
     return(
         <div>
-            <Button variant="contained" sx={buttonStyle} onClick={clickHandler}><CancelIcon/></Button>
+            <Button variant="contained" sx={buttonStyle} ><CancelIcon/></Button>
         </div>
     )
 

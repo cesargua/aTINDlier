@@ -6,7 +6,7 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 
 
 
-function Accept({budget, budgetChange, price, clicked, setClicked}) {
+function Accept({clickHandler}) {
 
     const buttonStyle = {
         backgroundColor: "#18A558",
@@ -15,15 +15,12 @@ function Accept({budget, budgetChange, price, clicked, setClicked}) {
         width: "100px"
     }
 
-    const clickHandler= () =>{
-        setClicked(!clicked)
-        budgetChange(budget-price);
-    }
+   
 
     return (
-    <div>
-        <Button variant="contained" sx={buttonStyle} onClick={clickHandler}><ShoppingCartCheckoutIcon /></Button>
-    </div>
+    <>
+        <Button variant="contained" sx={buttonStyle}><ShoppingCartCheckoutIcon /></Button>
+    </>
     )
 
 }
