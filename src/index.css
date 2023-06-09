@@ -74,4 +74,6 @@ button:focus-visible {
 } */
 .tinder_card{
   position: absolute;
+  top: auto;
+  margin-top: '400px';
 }

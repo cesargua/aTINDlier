@@ -18,7 +18,7 @@ function App() {
   // const [ , ] = useState()
 
   const [products, setProducts] = useState([])
-  const [budget, setBudget] = useState(20000);
+  const [budget, setBudget] = useState(0);
   
 
   //call api here
@@ -67,8 +67,6 @@ function App() {
     GETAllProducts();
    },[]);
 
-
-  
   return (
     <div>
         <Navbar />
@@ -87,12 +85,10 @@ function App() {
           direction="row"
           alignItems="center"
           justifyContent="center"
-          sx={{ minHeight: '120vh' }}
+          sx={{ minHeight: '110vh' }}
         >
-         
-         
             {/* {products ? products.map(product=><Product_Card products={products} product={product} budget={budget} budgetChange={budgetChange} swiped={swiped} setSwiped={setSwiped}/> ): null } */}
-            {products? <Product_Card products={products} budget={budget} budgetChange={budgetChange}/>: null}
+            {products.length > 0? <Product_Card products={products} budget={budget} budgetChange={budgetChange}/>: null}
           </Grid>
       </div>
   )

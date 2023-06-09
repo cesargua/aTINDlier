@@ -6,7 +6,7 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 
 
 
-function Accept({clickHandler}) {
+function Accept({swipeClickHandler}) {
 
     const buttonStyle = {
         backgroundColor: "#18A558",
@@ -15,11 +15,9 @@ function Accept({clickHandler}) {
         width: "100px"
     }
 
-   
-
     return (
     <>
-        <Button variant="contained" sx={buttonStyle}><ShoppingCartCheckoutIcon /></Button>
+        <Button variant="contained" sx={buttonStyle} onClick={()=>{swipeClickHandler('right')}}><ShoppingCartCheckoutIcon /></Button>
     </>
     )
 

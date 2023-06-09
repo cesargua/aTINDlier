@@ -2,7 +2,7 @@ import React , {useEffect,useState} from 'react';
 import {Button} from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
 
-function Reject({clicked, setClicked}){
+function Reject({swipeClickHandler}){
 
     const buttonStyle = {
         backgroundColor: "#dc143c",
@@ -17,7 +17,7 @@ function Reject({clicked, setClicked}){
     
     return(
         <div>
-            <Button variant="contained" sx={buttonStyle} ><CancelIcon/></Button>
+            <Button onClick={()=>{swipeClickHandler('left')}} variant="contained" sx={buttonStyle} ><CancelIcon/></Button>
         </div>
     )
 
