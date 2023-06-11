@@ -5,7 +5,7 @@ import Accept from './Accept.jsx'
 import Reject from './Reject.jsx'
 
 
-function Product_Card({products, budget, budgetChange}){
+function Product_Cards({products, budget, budgetChange}){
     const priceRef = useRef();
     const [currIndex, setCurrentIndex] = useState(products.length - 1);
     const tinderRef = useRef(currIndex);
@@ -43,28 +43,18 @@ function Product_Card({products, budget, budgetChange}){
     }
 
     const swipeHandler = (direction, price, index) => {
-        console.log(price)
+        // console.log(price)
         console.log(parseFloat(budget)-price);
         setCurrentIndex(index-1);
         tinderRef.current = index-1;
          if(direction==='right'){
             budgetChange(parseFloat(budget)-price)
         }
-       
     }
     const onCardLeftScreen= (dir)=>{
-        // const price = priceRef.current.childNodes[1].data;
-        // // console.log(priceRef)
-        // console.log(budget-price);
-
-        //  if(dir==='right'){
-        //     budgetChange(budget-price)
-        // }
-
-        // setSwiped(!swiped);
+        console.log('You swiped ', dir , '!')
     }
     const swipeClickHandler= async (dir) =>{
-        console.log(refs);
         if(currIndex < products.length){
             await refs[currIndex].current.swipe(dir);
         }
@@ -128,9 +118,7 @@ function Product_Card({products, budget, budgetChange}){
             </TinderCard> */}
         </>
     )
-
-
 }
 
-export default Product_Card;
+export default Product_Cards;
 

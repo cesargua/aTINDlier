@@ -22,6 +22,10 @@ function BudgetForm({budget, budgetChange, setShowForm}){
         align: "center"
         // backgroundColor: "white"
     }
+    const submitButtonStyle = {
+        
+    }
+
     const onSubmit = (e) => {
         e.preventDefault();
         setShowForm(false);

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 // import reactLogo from '../assets/react.svg'
 // import viteLogo from '/vite.svg'
 // import '../css/App.css'
-import Product_Card from './Product_Card.jsx'
+import Product_Cards from './Product_Cards.jsx'
 
 import {Grid} from '@mui/material'
 import Budget from './Budget.jsx'
@@ -20,7 +20,6 @@ function App() {
   const [products, setProducts] = useState([])
   const [budget, setBudget] = useState(0);
   
-
   //call api here
   const budgetChange= (change) =>{
       // setBudget(change.toFixed(2));
@@ -88,7 +87,7 @@ function App() {
           sx={{ minHeight: '110vh' }}
         >
             {/* {products ? products.map(product=><Product_Card products={products} product={product} budget={budget} budgetChange={budgetChange} swiped={swiped} setSwiped={setSwiped}/> ): null } */}
-            {products.length > 0? <Product_Card products={products} budget={budget} budgetChange={budgetChange}/>: null}
+            {products.length > 0? <Product_Cards products={products} budget={budget} budgetChange={budgetChange}/>: null}
           </Grid>
       </div>
   )

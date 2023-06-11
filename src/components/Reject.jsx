@@ -10,10 +10,6 @@ function Reject({swipeClickHandler}){
         height:"100px",
         width: "100px"
     }
-
-    //  const clickHandler= () =>{
-    //     setClicked(!clicked)
-    // }
     
     return(
         <div>
