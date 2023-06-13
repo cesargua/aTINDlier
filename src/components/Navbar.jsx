@@ -19,9 +19,6 @@ function Navbar(){
             <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
                 <MenuIcon />
             </IconButton>
-            {/* <Typography variant="h6" color="inherit" component="div">
-                aTINDlier
-            </Typography> */}
              <img src="src/assets/logos/logo-transparent-png.png" alt="logo" className="logo" style={logoStyle}/>
             </Toolbar>
         </AppBar>

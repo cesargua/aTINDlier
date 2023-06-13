@@ -29,8 +29,8 @@ function AddBudget({budget, budgetChange}){
         backgroundColor: "#85bb65"
     }
     const modalStyle = {
-        // top: 300,
-        // left: 100,
+        top: 200,
+        left: 500,
         // backgroundColor: "white"
     }
     const clickHandler = () =>{
@@ -40,6 +40,7 @@ function AddBudget({budget, budgetChange}){
         console.log('here')
         setShowForm(false);
     }
+
 
     return (
         <div>

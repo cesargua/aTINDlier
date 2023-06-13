@@ -3,14 +3,24 @@ import {Grid, Card, CardContent, Box, Typography, CardMedia} from '@mui/material
 import TinderCard from 'react-tinder-card'
 import Accept from './Accept.jsx'
 import Reject from './Reject.jsx'
+import controllers from '../backend/controllers.js'
 
 
-function Product_Cards({products, budget, budgetChange}){
+function Product_Cards({updateHistory, products, budget, budgetChange}){
     const priceRef = useRef();
     const [currIndex, setCurrentIndex] = useState(products.length - 1);
     const tinderRef = useRef(currIndex);
 
-    const refs = useMemo(
+    const cardRefs = useMemo(
+        () => {
+        //  console.log(Array(products.length))  
+        return Array(products.length)
+        .fill(0)
+        .map((i) => React.createRef())
+        }
+    , [])
+
+    const priceRefs = useMemo(
         () => {
         //  console.log(Array(products.length))  
         return Array(products.length)
@@ -42,23 +52,37 @@ function Product_Cards({products, budget, budgetChange}){
         borderRadius: '10%'
     }
 
-    const swipeHandler = (direction, price, index) => {
+    const denySwipe= (price) => {
+        const newBudget = parseFloat(budget)-price;
+        if(newBudget <= 0){
+            alert('Your budget is too low for that! Add more money!')
+            return 'right';
+        }   
+    }
+    
+    const swipeHandler = async (direction, price, title, index) => {
         // console.log(price)
-        console.log(parseFloat(budget)-price);
+        const newBudget = parseFloat(budget)-price;
+        if(direction==='right' && newBudget > 0){
+            budgetChange(newBudget);
+            updateHistory({title: title, price: price});
+        } 
         setCurrentIndex(index-1);
         tinderRef.current = index-1;
-         if(direction==='right'){
-            budgetChange(parseFloat(budget)-price)
-        }
     }
+
     const onCardLeftScreen= (dir)=>{
         console.log('You swiped ', dir , '!')
     }
+
     const swipeClickHandler= async (dir) =>{
+        const price = parseFloat(priceRefs[currIndex].current.innerHTML.split('$')[1]);
+        const newBudget = budget-price;
+        console.log(price)
         if(currIndex < products.length){
-            await refs[currIndex].current.swipe(dir);
-        }
-        // budgetChange(budget-price);
+            if((dir === 'right' && newBudget>=0) ||dir === 'left') await cardRefs[currIndex].current.swipe(dir);
+            else alert('Add in more to your budget!')
+        }   
     }
     
     return(
@@ -71,26 +95,26 @@ function Product_Cards({products, budget, budgetChange}){
                 </Grid>
                 <Grid item xs={5} sx={{ minHeight: '100vh' }} >
                 {products.map((product,index)=>
-                        <TinderCard className="tinder_card" key={product.id} ref={refs[index]} onSwipe={(dir)=>{swipeHandler(dir, product.price, index)}} 
+                        <TinderCard className="tinder_card" key={product.id} preventSwipe={['up','down']} ref={cardRefs[index]} onSwipe={(dir)=>{swipeHandler(dir, product.price, product.title, index)}} 
                         onCardLeftScreen={(dir)=>{onCardLeftScreen(dir);}}>
                             <Card sx={cardStyle} > 
-                                <CardContent>
+                                <CardContent >
                                     <CardMedia
                                         component='img'
                                         height='10'
-                                        image={product.image}
+                                        image={product.images[0]}
                                         sx={imageStyle}
                                     />
                                     <Typography gutterBottom variant='h5' component='div' className='product-name'>
                                         {product.title}
                                     </Typography>
-                                    <Typography gutterBottom variant='h7' component='div' className='product-price'>
+                                    <Typography gutterBottom ref={priceRefs[index]}  variant='h7' component='div' className='product-price'>
                                         ${product.price}
                                     </Typography>
                                 </CardContent>
                             </Card>
                         </TinderCard>
-                          )
+                        )
                     }
                     </Grid>
                 <Grid item xs={0}>

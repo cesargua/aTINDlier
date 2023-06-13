@@ -10,7 +10,6 @@ function Reject({swipeClickHandler}){
         height:"100px",
         width: "100px"
     }
-    
     return(
         <div>
             <Button onClick={()=>{swipeClickHandler('left')}} variant="contained" sx={buttonStyle} ><CancelIcon/></Button>
