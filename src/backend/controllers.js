@@ -8,7 +8,7 @@ const controllers = {
     },
     getUserById: async (id) => {
         try{
-            console.log(id);
+            // console.log(id);
             const docRef = doc(db, "users", id);
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
@@ -26,7 +26,7 @@ const controllers = {
 
     },
     updateUser: async(id,prop)=>{
-        console.log('inside controllers', prop)
+        // console.log('inside controllers', prop)
         try{
         const userRef = doc(db, "users", id)
         await updateDoc(userRef, prop);
