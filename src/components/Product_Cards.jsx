@@ -7,8 +7,9 @@ import controllers from '../backend/controllers.js'
 
 
 function Product_Cards({updateHistory, products, budget, budgetChange}){
-    const priceRef = useRef();
+    // const priceRef = useRef();
     const [currIndex, setCurrentIndex] = useState(products.length - 1);
+    // const [leftScreen, setLeftScreen] = useState(false);
     const tinderRef = useRef(currIndex);
 
     const cardRefs = useMemo(
@@ -20,14 +21,26 @@ function Product_Cards({updateHistory, products, budget, budgetChange}){
         }
     , [])
 
-    const priceRefs = useMemo(
-        () => {
-        //  console.log(Array(products.length))  
-        return Array(products.length)
-        .fill(0)
-        .map((i) => React.createRef())
-        }
-    , [])
+    // const priceRefs = useMemo(
+    //     () => {
+    //     //  console.log(Array(products.length))  
+    //     return Array(products.length)
+    //     .fill(0)
+    //     .map((i) => React.createRef())
+    //     }
+    // , []);
+    const priceRefs = Array(products.length).map((i) => products[i].price)
+    
+
+    // const leftScreen = useMemo(
+    //     () => {
+    //     //  console.log(Array(products.length))  
+    //     return Array(products.length)
+    //     .fill(0)
+    //     .map((i) => React.createRef())
+    //     }
+    // , []);
+
     
     const boxStyle = {
         display: 'inline-block', 
@@ -61,22 +74,40 @@ function Product_Cards({updateHistory, products, budget, budgetChange}){
     }
     
     const swipeHandler = async (direction, price, title, index) => {
-        // console.log(price)
+        console.log(price)
         const newBudget = parseFloat(budget)-price;
-        if(direction==='right' && newBudget > 0){
+        console.log('You swiped ', direction , '!');
+        // console.log('budget change')
+        console.log('budget change inside swipe handler is', newBudget);
+        if(direction==='right' && newBudget > 0) {
             budgetChange(newBudget);
             updateHistory({title: title, price: price});
-        } 
+        } else if(direction==='right' && newBudget <= 0){
+            cardRefs[currIndex].current.restore = true;
+            return;
+        }
         setCurrentIndex(index-1);
         tinderRef.current = index-1;
     }
 
-    const onCardLeftScreen= (dir)=>{
-        console.log('You swiped ', dir , '!')
+    const onCardLeftScreen= (dir, price,index)=>{
+        console.log('budget before leaving screen:', budget)
+        const newBudget = parseFloat(budget)-price;
+        console.log('new budget is', newBudget );
+        console.log(currIndex);
+        if(cardRefs[currIndex].current.restore){
+            alert('Add in to your budget!');
+            cardRefs[currIndex].current.restoreCard();
+            setCurrentIndex(index+1);
+            tinderRef.current = index+1;
+            cardRefs[currIndex].current.restore = false;
+        }
     }
 
     const swipeClickHandler= async (dir) =>{
-        const price = parseFloat(priceRefs[currIndex].current.innerHTML.split('$')[1]);
+        const price = parseFloat(products[currIndex].price);
+        console.log(products[currIndex].title)
+        console.log(price);
         const newBudget = budget-price;
         console.log(price)
         if(currIndex < products.length){
@@ -96,7 +127,7 @@ function Product_Cards({updateHistory, products, budget, budgetChange}){
                 <Grid item xs={5} sx={{ minHeight: '100vh' }} >
                 {products.map((product,index)=>
                         <TinderCard className="tinder_card" key={product.id} preventSwipe={['up','down']} ref={cardRefs[index]} onSwipe={(dir)=>{swipeHandler(dir, product.price, product.title, index)}} 
-                        onCardLeftScreen={(dir)=>{onCardLeftScreen(dir);}}>
+                        onCardLeftScreen={(dir)=>{onCardLeftScreen(dir, product.price, index);}}>
                             <Card sx={cardStyle} > 
                                 <CardContent >
                                     <CardMedia
@@ -108,7 +139,7 @@ function Product_Cards({updateHistory, products, budget, budgetChange}){
                                     <Typography gutterBottom variant='h5' component='div' className='product-name'>
                                         {product.title}
                                     </Typography>
-                                    <Typography gutterBottom ref={priceRefs[index]}  variant='h7' component='div' className='product-price'>
+                                    <Typography gutterBottom /*ref={priceRefs[index]}*/  variant='h7' component='div' className='product-price'>
                                         ${product.price}
                                     </Typography>
                                 </CardContent>

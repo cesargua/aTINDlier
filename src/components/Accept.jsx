@@ -15,9 +15,6 @@ function Accept({swipeClickHandler}) {
         width: "100px"
     }
 
-    const swipeClickValidator= ()=>{
-        
-    }
 
     return (
     <>

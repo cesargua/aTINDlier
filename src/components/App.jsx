@@ -16,7 +16,6 @@ import '../index.css'
 // Amplify.configure(awsconfig) // Configures the Amplify libraries with the cloud backend set up via the Amplify CLI
 
 function App() {
-  // const [ , ] = useState()
 
   const [products, setProducts] = useState([])
   const [budget, setBudget] = useState(0);
